@@ -28,16 +28,14 @@ import java.util.logging.Level;
  */
 public class VkGroupParser {
 
-    static Document doc;
-    static Set<String> urls = new HashSet<>();
+    private static Document doc;
+    private static Set<String> urls = new HashSet<>();
 
     public static Set<String> getEvents(String url) throws IOException {
         WebClient webClient = new WebClient();
-        webClient.setIncorrectnessListener(new IncorrectnessListener() {
-            @Override
-            public void notify(String s, Object o) {
-                //IGNORE
-            }
+        //TODO find better way to suppress this fucking useless logging
+        webClient.setIncorrectnessListener((s, o) -> {
+            //IGNORE
         });
         webClient.setHTMLParserListener(new HTMLParserListener() {
             @Override
@@ -78,6 +76,8 @@ public class VkGroupParser {
 
 
         HtmlPage page = webClient.getPage(url);
+
+        //TODO not to use exceptions in logic implementing
         try {
             page.executeJavaScript("Groups.showEvents();");
         } catch (ScriptException e) {
