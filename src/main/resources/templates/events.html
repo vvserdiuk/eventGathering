@@ -7,7 +7,7 @@
     <!-- from "fragments.html" at runtime.                                            -->
     <!-- ============================================================================ -->
     <meta charset="UTF-8"/>
-    <title>Java Online Projects</title>
+    <title>EvenGathering</title>
     <link href="https://cdn.jsdelivr.net/bootswatch/3.3.5/paper/bootstrap.css" rel="stylesheet" media="screen" />
 </head>
 <body>
@@ -22,7 +22,7 @@
                     <div  style="height:35em;" class="list-group-item">
                         <img  style="width:100%;" th:src="${event.imageLink}"/>
                         <div th:text="${event.title}"></div>
-                        <div  th:text="${event.startDate.getDayOfMonth()}+' ' + ${event.startDate.getMonth().toString().toLowerCase() }+''+' '+${event.startTime}"></div>
+                        <div  th:text="${event.startDateTime.getDayOfMonth()}+' ' + ${event.startDateTime.getMonth().toString().toLowerCase()}+''+' '+${event.startDateTime.toLocalTime()}"></div>
                         <a th:href="${event.community.vkLink}"  target="_blank" th:text="${event.community.title}"></a>
                     </div>
                 </div>

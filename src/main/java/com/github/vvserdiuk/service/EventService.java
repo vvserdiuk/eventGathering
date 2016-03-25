@@ -10,4 +10,6 @@ import java.util.List;
 public interface EventService {
 
     public List<Event> getAll();
+
+    public Event getById(Integer id);
 }

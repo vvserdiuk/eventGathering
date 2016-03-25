@@ -34,6 +34,7 @@ public class VkEventParser {
 
     private Document doc;
     private String url;
+    //TODO Jsoup.connect in one method
     public VkEventParser(String url) throws IOException {
         while (true) {
             try {
@@ -51,7 +52,7 @@ public class VkEventParser {
     }
 
     public Event getEvent() throws IOException {
-        return new Event(getPosterUrl(), getTitle(), getStartDateTime().toLocalDate(), getEndDateTime().toLocalTime(), getDescription());
+        return new Event(getPosterUrl(), getTitle(), getStartDateTime(), getDescription());
     }
 
     public LocalDateTime getStartDateTime() throws IOException {

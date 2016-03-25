@@ -20,9 +20,9 @@ import java.util.Set;
 
 @EnableJpaRepositories
 @SpringBootApplication
-public class EventGathering2Application extends SpringBootServletInitializer {
+public class EventGatheringApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) throws IOException {
-		SpringApplication.run(EventGathering2Application.class, args);
+		SpringApplication.run(EventGatheringApplication.class, args);
 	}
 }

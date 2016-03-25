@@ -5,7 +5,9 @@ import com.github.vvserdiuk.service.EventsRefreshService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -16,7 +18,6 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping("/mvc")
 public class EventController {
 
     Logger LOG = Logger.getLogger(this.getClass());
@@ -27,22 +28,24 @@ public class EventController {
     @Autowired
     EventsRefreshService refreshService;
 
-    @RequestMapping
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String root() {
+        return "redirect:events";
+    }
+
+    @RequestMapping("/events")
     public ModelAndView getAll(){
         LOG.debug("getAll MVC");
         ModelAndView mav = new ModelAndView("events");
-        List<String> data = new ArrayList<>();
-        data.add("1");
-        data.add("2");
-        data.add("3");
-        data.add("4");
-        data.add("5");
-        data.add("6");
-        data.add("7");
-        data.add("8");
-
-        mav.addObject("datas", data);
         mav.addObject("events", service.getAll());
+        return mav;
+    }
+
+    @RequestMapping("/events/{id}")
+    public ModelAndView getById(@PathVariable("id") Integer id){
+        LOG.debug("get event with id=" + id);
+        ModelAndView mav = new ModelAndView("eventPage");
+        mav.addObject("event", service.getById(id));
         return mav;
     }
 

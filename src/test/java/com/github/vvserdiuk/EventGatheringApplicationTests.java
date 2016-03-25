@@ -13,9 +13,9 @@ import java.io.IOException;
 import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = EventGathering2Application.class)
+@SpringApplicationConfiguration(classes = EventGatheringApplication.class)
 @WebAppConfiguration
-public class EventGathering2ApplicationTests {
+public class EventGatheringApplicationTests {
 
 	@Test
 	public void contextLoads() throws IOException {

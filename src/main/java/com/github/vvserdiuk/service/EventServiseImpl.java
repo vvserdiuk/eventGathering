@@ -24,4 +24,8 @@ public class EventServiseImpl implements EventService{
     public List<Event> getAll(){
         return repository.getAll();
     }
+
+    public Event getById(Integer id){
+        return repository.findOne(id);
+    }
 }

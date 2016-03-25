@@ -1,10 +1,10 @@
 package com.github.vvserdiuk.model;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 /**
  * Created by vvserdiuk on 04.03.2016.
@@ -21,9 +21,7 @@ public class Event {
 
     private String title;
 
-    private LocalDate startDate;
-
-    private LocalTime startTime;
+    private LocalDateTime startDateTime;
 
     @Length(max = 10_000)
     private String description;
@@ -35,11 +33,10 @@ public class Event {
     public Event() {
     }
 
-    public Event(String imageLink, String title, LocalDate startDate, LocalTime startTime, String description) {
+    public Event(String imageLink, String title, LocalDateTime startDateTime, String description) {
         this.imageLink = imageLink;
         this.title = title;
-        this.startDate = startDate;
-        this.startTime = startTime;
+        this.startDateTime = startDateTime;
         this.description = description;
     }
 
@@ -63,20 +60,12 @@ public class Event {
         this.title = title;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public LocalDateTime getStartDateTime() {
+        return startDateTime;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
+    public void setStartDateTime(LocalDateTime startDateTime) {
+        this.startDateTime = startDateTime;
     }
 
     public String getDescription() {
@@ -101,8 +90,7 @@ public class Event {
                 "id=" + id +
                 ", imageLink='" + imageLink + '\'' +
                 ", title='" + title + '\'' +
-                ", startDate=" + startDate +
-                ", startTime=" + startTime +
+                ", startDateTime=" + startDateTime +
                 ", description='" + description + '\'' +
                 ", community=" + community +
                 '}';

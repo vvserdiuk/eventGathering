@@ -1,27 +1,21 @@
 package com.github.vvserdiuk.parsing;
 
-import com.gargoylesoftware.htmlunit.*;
+import com.gargoylesoftware.htmlunit.ScriptException;
+import com.gargoylesoftware.htmlunit.SilentCssErrorHandler;
+import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HTMLParserListener;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.javascript.JavaScriptErrorListener;
-import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.w3c.css.sac.CSSException;
-import org.w3c.css.sac.CSSParseException;
-import org.w3c.css.sac.ErrorHandler;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
 
 /**
  * Created by vvserdiuk on 29.02.2016.
@@ -33,7 +27,6 @@ public class VkGroupParser {
 
     public static Set<String> getEvents(String url) throws IOException {
         WebClient webClient = new WebClient();
-        //TODO find better way to suppress this fucking useless logging
         webClient.setIncorrectnessListener((s, o) -> {
             //IGNORE
         });
