@@ -1,5 +1,7 @@
 package com.github.vvserdiuk.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.net.URI;
 import java.util.Set;
@@ -19,6 +21,7 @@ public class Community {
     private String vkLink;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "community")
+    @JsonIgnore
     private Set<Event> events;
 
     public Community() {

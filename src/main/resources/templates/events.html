@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments::headTag('Events')">
     <!-- ============================================================================ -->
     <!-- This <head> is only used for static prototyping purposes (natural templates) -->
@@ -13,15 +13,51 @@
 <body>
 <th:block th:include="fragments::header"/>
 <div class="container">
+    <form method="post" action="#" th:action="@{/events/filter}" class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="startDate">From Date:</label>
+
+            <div class="col-sm-2">
+                <input name="startDate" id="startDate" class="date-picker"/>
+            </div>
+
+            <label class="control-label col-sm-2" for="endDate">To Date:</label>
+
+            <div class="col-sm-2">
+                <input name="endDate" id="endDate" class="date-picker" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="startTime">From Time:</label>
+
+            <div class="col-sm-2">
+                <input name="startTime" id="startTime" class="time-picker"/>
+            </div>
+
+            <label class="control-label col-sm-2" for="endTime">To Time:</label>
+
+            <div class="col-sm-2">
+                <input name="endTime" id="endTime" class="time-picker" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-8">
+                <button type="submit" class="btn btn-primary pull-right">Filter</button>
+            </div>
+        </div>
+    </form>
+
+    <p id="results"></p>
+
     <!--/*@thymesVar id="events" type="java.util.List<Event>"*/-->
-    <div class="list-inline" >
+    <div class="list-inline" id="eventsList">
         <!--/*@thymesVar id="event" type="com.github.vvserdiuk.model.Event"*/-->
         <div class="row">
             <li th:each="event, iterStat : ${events}" >
                 <div class="col-sm-4 col-md-3">
                     <div  style="height:35em;" class="list-group-item">
                         <img  style="width:100%;" th:src="${event.imageLink}"/>
-                        <div th:text="${event.title}"></div>
+                        <div class="title" th:id="title+${event.id}" th:text="${event.title}"></div>
                         <div  th:text="${event.startDateTime.getDayOfMonth()}+' ' + ${event.startDateTime.getMonth().toString().toLowerCase()}+''+' '+${event.startDateTime.toLocalTime()}"></div>
                         <a th:href="${event.community.vkLink}"  target="_blank" th:text="${event.community.title}"></a>
                     </div>
@@ -31,5 +67,9 @@
     </div>
 </div>
 <th:block th:include="fragments::footer"/>
+<script   src="/js/events.js"></script>
+<script>
+    $(document).ready(initDateTimePicker());
+</script>
 </body>
 </html>

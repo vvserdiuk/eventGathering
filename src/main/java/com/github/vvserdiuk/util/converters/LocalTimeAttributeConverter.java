@@ -1,4 +1,4 @@
-package com.github.vvserdiuk.util;
+package com.github.vvserdiuk.util.converters;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

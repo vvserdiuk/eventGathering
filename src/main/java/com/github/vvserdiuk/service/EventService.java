@@ -2,6 +2,8 @@ package com.github.vvserdiuk.service;
 
 import com.github.vvserdiuk.model.Event;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -12,4 +14,6 @@ public interface EventService {
     public List<Event> getAll();
 
     public Event getById(Integer id);
+
+    public List<Event> getFiltered(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime);
 }

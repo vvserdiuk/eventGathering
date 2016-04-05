@@ -1,7 +1,6 @@
 package com.github.vvserdiuk.model;
 
 import org.hibernate.validator.constraints.Length;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -28,6 +27,7 @@ public class Event {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="community_id")
+//    @JsonBackReference
     private Community community;
 
     public Event() {
