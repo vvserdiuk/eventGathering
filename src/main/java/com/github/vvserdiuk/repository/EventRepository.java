@@ -22,4 +22,6 @@ public interface EventRepository extends CrudRepository<Event, Integer> {
     List<Event> findByStartDateTimeBetween(
             @Param("startDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDateTime,
             @Param("endDateTime")   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDateTime);
+
+    List<Event> findByCommunityId(@Param("communityId") Integer communityId);
 }

@@ -1,6 +1,7 @@
 package com.github.vvserdiuk.service;
 
 import com.github.vvserdiuk.model.Event;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,4 +17,6 @@ public interface EventService {
     public Event getById(Integer id);
 
     public List<Event> getFiltered(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime);
+
+    List<Event> getByCommunityId(@Param("communityId") Integer communityId);
 }

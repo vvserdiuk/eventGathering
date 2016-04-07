@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::headTag('Community')">
+    <!-- ============================================================================ -->
+    <!-- This <head> is only used for static prototyping purposes (natural templates) -->
+    <!-- and is therefore entirely optional, as this markup fragment will be included  -->
+    <!-- from "fragments.html" at runtime.                                            -->
+    <!-- ============================================================================ -->
+    <meta charset="UTF-8"/>
+    <title>EvenGathering</title>
+    <link href="https://cdn.jsdelivr.net/bootswatch/3.3.5/paper/bootstrap.css" rel="stylesheet" media="screen" />
+</head>
+<body>
+<th:block th:include="fragments::header"/>
+<div class="container">
+    <!--/*@thymesVar id="event" type="com.github.vvserdiuk.model.Community"*/-->
+    <h1 th:text="${community.title}"></h1>
+    <table class="table" >
+        <tr>
+            <td><img src="http://cs625724.vk.me/v625724395/58817/E6WGQFf-_UM.jpg"/></td>
+            <td >
+                <!--/*@thymesVar id="events" type="java.util.List<Event>"*/-->
+                <div class="list-inline" id="eventsList">
+                    <!--/*@thymesVar id="event" type="com.github.vvserdiuk.model.Event"*/-->
+                    <div class="row">
+                        <li th:each="event, iterStat : ${events}" >
+                            <div class="col-sm-6 col-md-4">
+                                <div class="list-group-item">
+                                    <img  style="width:100%;" th:src="${event.imageLink}"/>
+                                    <a class="title" th:href="${#httpServletRequest.getContextPath()}+'/'+events+'/'+${event.id}" th:id="title+${event.id}" th:text="${event.title}"></a>
+                                    <div  th:text="${event.startDateTime.getDayOfMonth()}+' ' + ${event.startDateTime.getMonth().toString().toLowerCase()}+''+' '+${event.startDateTime.toLocalTime()}"></div>
+                                    <a th:href="${event.community.vkLink}"  target="_blank" th:text="${event.community.title}"></a>
+                                </div>
+                            </div>
+                        </li>
+                    </div>
+                </div>
+
+            </td>
+        </tr>
+    </table>
+
+
+
+</div>
+<th:block th:include="fragments::footer"/>
+</body>
+</html>

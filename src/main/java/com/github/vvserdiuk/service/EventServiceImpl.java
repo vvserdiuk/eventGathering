@@ -6,6 +6,7 @@ import com.github.vvserdiuk.util.EventUtil;
 import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -25,10 +26,12 @@ public class EventServiceImpl implements EventService{
     @Autowired
     EventRepository repository;
 
+    @Override
     public List<Event> getAll(){
         return Lists.newArrayList(repository.findAll());
     }
 
+    @Override
     public Event getById(Integer id){
         return repository.findOne(id);
     }
@@ -40,5 +43,10 @@ public class EventServiceImpl implements EventService{
 
         List<Event> filteredByTimes = filtered.stream().filter(event -> EventUtil.isBetweenTimes(event.getStartDateTime().toLocalTime(), startTime, endTime)).collect(Collectors.toList());
         return filteredByTimes;
+    }
+
+    @Override
+    public List<Event> getByCommunityId(Integer communityId) {
+        return repository.findByCommunityId(communityId);
     }
 }
