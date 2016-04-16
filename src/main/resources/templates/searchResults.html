@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
-<head th:replace="fragments::headTag('Events')">
+<head th:replace="fragments::headTag('Results')">
     <!-- ============================================================================ -->
     <!-- This <head> is only used for static prototyping purposes (natural templates) -->
     <!-- and is therefore entirely optional, as this markup fragment will be included  -->
@@ -13,43 +13,18 @@
 <body>
 <th:block th:include="fragments::header"/>
 <div class="container">
-    <form method="post" action="#" th:action="@{/events/filter}" class="form-horizontal">
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="startDate">From Date:</label>
 
-            <div class="col-sm-2">
-                <input name="startDate" id="startDate" class="date-picker"/>
-            </div>
-
-            <label class="control-label col-sm-2" for="endDate">To Date:</label>
-
-            <div class="col-sm-2">
-                <input name="endDate" id="endDate" class="date-picker" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="startTime">From Time:</label>
-
-            <div class="col-sm-2">
-                <input name="startTime" id="startTime" class="time-picker"/>
-            </div>
-
-            <label class="control-label col-sm-2" for="endTime">To Time:</label>
-
-            <div class="col-sm-2">
-                <input name="endTime" id="endTime" class="time-picker" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-8">
-                <button type="submit" class="btn btn-primary pull-right">Filter</button>
-            </div>
-        </div>
-    </form>
-
+    <div class="btn-group btn-group-justified">
+        <a href="#" id="showEvents" class="btn btn-default">Events</a>
+        <a href="#" id="showCommunities" class="btn btn-default">Communities</a>
+    </div>
+    <p></p>
     <!--/*@thymesVar id="events" type="java.util.List<Event>"*/-->
     <div class="list-inline" id="eventsList">
         <!--/*@thymesVar id="event" type="com.github.vvserdiuk.model.Event"*/-->
+        <div th:if="${#lists.isEmpty(events)}">
+            <p>No events found</p>
+        </div>
         <div class="row">
             <li th:each="event, iterStat : ${events}" >
                 <div class="col-sm-4 col-md-3">
@@ -63,11 +38,37 @@
             </li>
         </div>
     </div>
+
+    <!--/*@thymesVar id="events" type="java.util.List<Event>"*/-->
+    <div class="list-inline" id="communityList" style="display: none" >
+        <div th:if="${#lists.isEmpty(communities)}">
+            <p>No communities found</p>
+        </div>
+        <!--/*@thymesVar id="event" type="com.github.vvserdiuk.model.Community"*/-->
+        <div class="row">
+            <li th:each="community, iterStat : ${communities}" >
+                <div class="col-sm-4 col-md-3">
+                    <div  style="height:35em;" class="list-group-item">
+                        <a th:href="'/events/'+${community.id}"><img   style="width:100%;" src="http://cs636216.vk.me/v636216468/4ef/JTsOP25CgZg.jpg"/></a>
+                        <a th:href="${community.vkLink}"  target="_blank" th:text="${community.title}"></a>
+                    </div>
+                </div>
+            </li>
+        </div>
+    </div>
 </div>
 <th:block th:include="fragments::footer"/>
-<script   src="/js/events.js"></script>
-<script>
-    $(document).ready(initDateTimePicker());
-</script>
 </body>
+<script>
+    $(document).ready(function() {
+        $('#showEvents').click(function(){
+            $('#eventsList').show();
+            $('#communityList').hide();
+        });
+        $('#showCommunities').click(function(){
+            $('#eventsList').hide();
+            $('#communityList').show();
+        });
+    });
+</script>
 </html>

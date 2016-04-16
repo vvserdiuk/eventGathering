@@ -30,4 +30,9 @@ public class EventRepositoryTest {
     public void testGetAllByCommunityId() throws Exception {
         LOG.info(repository.findByCommunityId(1));
     }
+
+    @Test
+    public void testFindByTitleContaining() throws Exception {
+        LOG.info("!!!" + repository.findByTitleContaining("мастер"));
+    }
 }

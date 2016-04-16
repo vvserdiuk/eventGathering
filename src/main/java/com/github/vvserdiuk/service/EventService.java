@@ -12,11 +12,13 @@ import java.util.List;
  */
 public interface EventService {
 
-    public List<Event> getAll();
+    List<Event> getAll();
 
-    public Event getById(Integer id);
+    Event getById(Integer id);
 
-    public List<Event> getFiltered(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime);
+    List<Event> getFiltered(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime);
 
     List<Event> getByCommunityId(@Param("communityId") Integer communityId);
+
+    List<Event> findByTitleContaining(@Param("title")String title);
 }

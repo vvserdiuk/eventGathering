@@ -1,6 +1,7 @@
 package com.github.vvserdiuk.repository;
 
 import com.github.vvserdiuk.model.Event;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,7 +16,7 @@ import java.util.List;
 @Repository
 public interface EventRepository extends CrudRepository<Event, Integer> {
 
-    Event getByTitle(@Param("title") String title);
+    Event getByTitle(String title);
 
 //    Collection<Event> findByDateTime(@Param("dateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime);
 
@@ -24,4 +25,9 @@ public interface EventRepository extends CrudRepository<Event, Integer> {
             @Param("endDateTime")   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDateTime);
 
     List<Event> findByCommunityId(@Param("communityId") Integer communityId);
+
+//    List<Event> findByTitleContainingIgnoreCase(String title);
+
+    @Query("SELECT e FROM Event e WHERE LOWER(e.title) LIKE LOWER(CONCAT('%', :title, '%'))")
+    List<Event> findByTitleContaining(@Param("title")String title);
 }

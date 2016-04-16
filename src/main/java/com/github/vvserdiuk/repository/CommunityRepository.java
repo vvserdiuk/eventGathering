@@ -18,5 +18,6 @@ public interface CommunityRepository extends CrudRepository<Community, Integer> 
     @Query("SELECT c FROM Community c")
     List<Community> getAll();
 
-
+    @Query("SELECT c FROM Community c WHERE LOWER(c.title) LIKE LOWER(CONCAT('%', :title, '%'))")
+    List<Event> findByTitleContaining(@Param("title")String title);
 }

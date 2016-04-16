@@ -49,4 +49,9 @@ public class EventServiceImpl implements EventService{
     public List<Event> getByCommunityId(Integer communityId) {
         return repository.findByCommunityId(communityId);
     }
+
+    @Override
+    public List<Event> findByTitleContaining(@Param("title") String title) {
+        return repository.findByTitleContaining(title);
+    }
 }

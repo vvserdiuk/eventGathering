@@ -1,6 +1,10 @@
 package com.github.vvserdiuk.service;
 
 import com.github.vvserdiuk.model.Community;
+import com.github.vvserdiuk.model.Event;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 /**
  * Created by vvserdiuk on 07.04.2016.
@@ -8,4 +12,6 @@ import com.github.vvserdiuk.model.Community;
 public interface CommunityService {
 
     Community getById(Integer id);
+
+    List<Event> findByTitleContaining(String title);
 }
