@@ -25,7 +25,7 @@ public class VkGroupParser {
     private static Document doc;
     private static Set<String> urls = new HashSet<>();
 
-    public static Set<String> getEvents(String url) throws IOException {
+    public static Set<String> getEventsUrls(String url) throws IOException {
         WebClient webClient = new WebClient();
         webClient.setIncorrectnessListener((s, o) -> {
             //IGNORE

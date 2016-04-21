@@ -57,7 +57,7 @@
                         <a th:href="'/events/'+${event.id}"><img   style="width:100%;" th:src="${event.imageLink}"/></a>
                         <div class="title" th:id="title+${event.id}" th:text="${event.title}"></div>
                         <div  th:text="${event.startDateTime.getDayOfMonth()}+' ' + ${event.startDateTime.getMonth().toString().toLowerCase()}+''+' '+${event.startDateTime.toLocalTime()}"></div>
-                        <a th:href="${event.community.vkLink}"  target="_blank" th:text="${event.community.title}"></a>
+                        <!--<a th:href="${event.community.vkLink}"  target="_blank" th:text="${event.community.title}"></a>-->
                     </div>
                 </div>
             </li>

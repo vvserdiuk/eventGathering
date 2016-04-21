@@ -2,7 +2,6 @@ package com.github.vvserdiuk.web;
 
 import com.github.vvserdiuk.model.Event;
 import com.github.vvserdiuk.service.EventService;
-import com.github.vvserdiuk.service.EventsRefreshService;
 import com.github.vvserdiuk.model.DateTimeEntity;
 import com.github.vvserdiuk.util.EventUtil;
 import org.apache.log4j.Logger;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -28,9 +26,6 @@ public class EventController {
 
     @Autowired
     EventService service;
-
-    @Autowired
-    EventsRefreshService refreshService;
 
     @RequestMapping(value = {"/", "/events"}, method = RequestMethod.GET)
     public String getAll(Model model){
@@ -61,12 +56,7 @@ public class EventController {
         return "events";
     }
 
-    //TODO change by trigger
-    @RequestMapping("/refresh")
-    public String refresh(){
-        String result = String.valueOf(refreshService.refresh());
-        return result;
-    }
+
     @RequestMapping("/exception")
     public ModelAndView exception(){
         return new ModelAndView("exception");

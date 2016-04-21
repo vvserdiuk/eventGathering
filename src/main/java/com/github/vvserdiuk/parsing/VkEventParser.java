@@ -9,6 +9,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -44,7 +45,7 @@ public class VkEventParser {
                         .timeout(10_000)
                         .get();
                 break;
-            } catch (SocketTimeoutException e) {
+            } catch (SocketTimeoutException | ConnectException e) {
                 // retry
             }
         }
@@ -65,15 +66,23 @@ public class VkEventParser {
                         .timeout(10_000)
                         .get();
                 break;
-            } catch (SocketTimeoutException e) {
+            } catch (SocketTimeoutException | ConnectException e) {
                 // retry
             }
         }
 
-        LOG.debug("!!!!!!!" + url);
-        LOG.debug(tmpDoc.getElementsContainingOwnText(START_TIME_EN).first());
+        LOG.info("!!!!!!!" + url);
+        LOG.info(tmpDoc.getElementsContainingOwnText(START_TIME_EN).first());
         String startDateTime = tmpDoc.getElementsContainingOwnText(START_TIME_EN).first().nextElementSibling().html();
-        String ruStartDateTime = doc.getElementsContainingOwnText(START_TIME_RU).first().nextElementSibling().html();
+
+        Elements elementsContainingStartTimeRuText = doc.getElementsContainingOwnText(START_TIME_RU);
+        Element ruStartDateTimeElement = elementsContainingStartTimeRuText.first().nextElementSibling();
+        if (ruStartDateTimeElement==null){ //if description text contains START_TIME_RU text
+            ruStartDateTimeElement = elementsContainingStartTimeRuText.get(1).nextElementSibling();
+        }
+        LOG.info("ruStartDateTimeElement: " + ruStartDateTimeElement);
+        String ruStartDateTime =ruStartDateTimeElement.html();
+
         return parseDateTime(startDateTime, ruStartDateTime);
     }
 
@@ -87,7 +96,7 @@ public class VkEventParser {
                         .timeout(10_000)
                         .get();
                 break;
-            } catch (SocketTimeoutException e) {
+            } catch (SocketTimeoutException | ConnectException e) {
                 e.printStackTrace();
             }
         }
@@ -104,8 +113,8 @@ public class VkEventParser {
     }
 
 
-    private LocalDateTime parseDateTime(String datTime, String ruDateTime){
-        String[] timeArr = datTime.split(" ");
+    private LocalDateTime parseDateTime(String dateTime, String ruDateTime){
+        String[] timeArr = dateTime.split(" ");
 
         int dayOfMonth = 1;
         Month month = null;
@@ -120,11 +129,11 @@ public class VkEventParser {
 
             LOG.debug(ruDateTime);
             String onlyTime = ruDateTime.substring(ruDateTime.lastIndexOf(" ")+1);
-            if (onlyTime.startsWith("0")){ // cannot parse "0:xx", so I had to do "00:xx"
+            if (onlyTime.length()==4){ // cannot parse "X:xx", so I had to do "0X:xx"
                 onlyTime="0"+onlyTime;
             }
             LocalTime localTime = LocalTime.parse(onlyTime);
-            hour       = localTime.minusHours(1).getHour();
+            hour       = localTime.getHour();
             minute     = localTime.getMinute();
         }
         else if (timeArr.length==4){
@@ -135,7 +144,7 @@ public class VkEventParser {
                     year = getYear(month);
 
                     LocalTime localTime = LocalTime.parse(timeArr[2] + " " + timeArr[3].toUpperCase(), DateTimeFormatter.ofPattern("K:m a"));
-                    hour = localTime.minusHours(1).getHour();
+                    hour = localTime.getHour();
                     minute = localTime.getMinute();
                     break;
                 }
@@ -145,7 +154,7 @@ public class VkEventParser {
                     year = getYear(month);
 
                     LocalTime localTime = LocalTime.parse(timeArr[2] + " " + timeArr[3].toUpperCase(), DateTimeFormatter.ofPattern("K:m a"));
-                    hour = localTime.minusHours(1).getHour();
+                    hour = localTime.getHour();
                     minute = localTime.getMinute();
                     break;
                 }
@@ -155,7 +164,7 @@ public class VkEventParser {
                     year = getYear(month);
 
                     LocalTime localTime = LocalTime.parse(timeArr[2] + " " + timeArr[3].toUpperCase(), DateTimeFormatter.ofPattern("K:m a"));
-                    hour = localTime.minusHours(1).getHour();
+                    hour = localTime.getHour();
                     minute = localTime.getMinute();
                     break;
                 }
@@ -216,7 +225,7 @@ public class VkEventParser {
                         .timeout(10_000)
                         .get();
                 break;
-            } catch (SocketTimeoutException e) {
+            } catch (SocketTimeoutException | ConnectException ee) {
                 // retry
             }
         }

@@ -19,10 +19,10 @@ public class EventGatheringApplicationTests {
 
 	@Test
 	public void contextLoads() throws IOException {
-		Set<String> eventsToParce = VkGroupParser.getEvents("http://vk.com/a_ryba");
+		Set<String> eventsToParse = VkGroupParser.getEventsUrls("http://vk.com/a_ryba");
 		VkEventParser eventParser;
 		Event event;
-		for (String e : eventsToParce){
+		for (String e : eventsToParse){
 			eventParser = new VkEventParser(e);
 //            event = eventParser.getEvent();
 
