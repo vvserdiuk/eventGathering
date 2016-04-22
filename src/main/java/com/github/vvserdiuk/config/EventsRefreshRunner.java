@@ -37,7 +37,7 @@ public class EventsRefreshRunner implements CommandLineRunner {
             try {
                 LOG.info("bla-bla-bla");
                 refresh();
-                TimeUnit.SECONDS.sleep(30);
+                TimeUnit.MINUTES.sleep(30);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -49,22 +49,47 @@ public class EventsRefreshRunner implements CommandLineRunner {
             List<Community> communities = communityRepository.getAll();
             LOG.info(communities);
 
-            Set<String> eventsUrlsToParse = new HashSet<>();
-            for (Community с : communities) {
-                eventsUrlsToParse.addAll(VkGroupParser.getEventsUrls(с.getVkLink()));
+            Set<EventUrlWithCommunity> eventUrlsWithCommunities = new HashSet<>();
+            for (Community community : communities) {
+                Set<String> eventUrls = VkGroupParser.getEventsUrls(community.getVkLink());
+                eventUrls.forEach(url -> eventUrlsWithCommunities.add(new EventUrlWithCommunity(url, community)));
             }
 
-            LOG.info(eventsUrlsToParse);
             VkEventParser eventParser;
             Event event;
-            for (String e : eventsUrlsToParse){
-                eventParser = new VkEventParser(e);
+            for (EventUrlWithCommunity urlWithCommunity : eventUrlsWithCommunities){
+                eventParser = new VkEventParser(urlWithCommunity.eventUrl);
                 event = eventParser.getEvent();
-                //TODO save with community
+                event.setCommunity(urlWithCommunity.community);
                 repository.save(event);
             }
         } catch (IOException e) {
             LOG.info(e.getStackTrace());
+        }
+    }
+
+    private class EventUrlWithCommunity {
+        String eventUrl;
+        Community community;
+
+        EventUrlWithCommunity(String eventUrl, Community community) {
+            this.eventUrl = eventUrl;
+            this.community = community;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            EventUrlWithCommunity that = (EventUrlWithCommunity) o;
+
+            return eventUrl.equals(that.eventUrl);
+
+        }
+        @Override
+        public int hashCode() {
+            return eventUrl.hashCode();
         }
     }
 
