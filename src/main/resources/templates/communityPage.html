@@ -13,11 +13,13 @@
 <body>
 <th:block th:include="fragments::header"/>
 <div class="container">
-    <!--/*@thymesVar id="event" type="com.github.vvserdiuk.model.Community"*/-->
+    <!--/*@thymesVar id="community" type="com.github.vvserdiuk.model.Community"*/-->
     <h1 th:text="${community.title}"></h1>
     <table class="table" >
         <tr>
-            <td><img src="http://cs636216.vk.me/v636216468/4ef/JTsOP25CgZg.jpg"/></td>
+            <td><img src="http://cs636216.vk.me/v636216468/4ef/JTsOP25CgZg.jpg"/>
+                <a th:href="${community.vkLink}" th:text="${community.vkLink}" target="_blank" ></a>
+            </td>
             <td >
                 <!--/*@thymesVar id="events" type="java.util.List<Event>"*/-->
                 <div class="list-inline" id="eventsList">
@@ -25,12 +27,7 @@
                     <div class="row">
                         <li th:each="event, iterStat : ${events}" >
                             <div class="col-sm-6 col-md-4">
-                                <div class="list-group-item">
-                                    <img  style="width:100%;" th:src="${event.imageLink}"/>
-                                    <a class="title" th:href="${#httpServletRequest.getContextPath()}+'/'+events+'/'+${event.id}" th:id="title+${event.id}" th:text="${event.title}"></a>
-                                    <div  th:text="${event.startDateTime.getDayOfMonth()}+' ' + ${event.startDateTime.getMonth().toString().toLowerCase()}+''+' '+${event.startDateTime.toLocalTime()}"></div>
-                                    <a th:href="${event.community.vkLink}"  target="_blank" th:text="${event.community.title}"></a>
-                                </div>
+                                <th:block th:include="fragments::eventsList"/>
                             </div>
                         </li>
                     </div>

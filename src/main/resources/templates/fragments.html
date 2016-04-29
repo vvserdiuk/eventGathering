@@ -30,7 +30,27 @@
         </div>
     </div>
 </nav>
-    </th:block>
+</th:block>
+
+<div th:fragment="eventsList" class="list-group-item">
+    <div class="list-group-item">
+        <a th:href="'/events/'+${event.id}"><img   style="width:100%;" th:src="${event.imageLink}"/></a>
+        <span class="title" th:id="title+${event.id}" th:text="${event.title}"></span>
+        <div>
+                            <span  th:text="
+                            ${event.startDateTime.getDayOfMonth()}+' ' +
+                            ${event.startDateTime.getMonth().toString().toLowerCase()}+' '+
+                            ${event.startDateTime.toLocalTime()}">
+                            </span>
+                            <span  th:text="${event.endDateTime != null} ? ' - ' +
+                            ${event.endDateTime.getDayOfMonth()}+' ' +
+                            ${event.endDateTime.getMonth().toString().toLowerCase()}+' '+
+                            ${event.endDateTime.toLocalTime()}">
+                            </span>
+        </div>
+        <a th:href="${'/communities/'+event.community.id}" th:text="${event.community.title}"></a>
+    </div>
+</div>
 
 
 <th:block th:fragment="footer">

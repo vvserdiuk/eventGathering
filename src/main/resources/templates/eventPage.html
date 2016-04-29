@@ -22,8 +22,20 @@
                 <blockquote>
                     <div th:utext="${event.description}"> </div>
                 </blockquote>
-                <h4  th:text="${event.startDateTime.getDayOfMonth()}+' ' + ${event.startDateTime.getMonth().toString().toLowerCase()}+''+' '+${event.startDateTime.toLocalTime()}"></h4>
-                <h4><a th:href="${event.community.vkLink}"  target="_blank" th:text="${event.community.title}"></a></h4>
+                <h4>
+                            <span  th:text="
+                            ${event.startDateTime.getDayOfMonth()}+' ' +
+                            ${event.startDateTime.getMonth().toString().toLowerCase()}+' '+
+                            ${event.startDateTime.toLocalTime()}">
+                            </span>
+                            <span  th:text="${event.endDateTime != null} ? ' - ' +
+                            ${event.endDateTime.getDayOfMonth()}+' ' +
+                            ${event.endDateTime.getMonth().toString().toLowerCase()}+' '+
+                            ${event.endDateTime.toLocalTime()}">
+                            </span>
+                </h4>
+                <h4><a th:href="${'/communities/'+event.community.id}" th:text="${event.community.title}"></a></h4>
+                <h4><a th:href="${event.vkLink}"  target="_blank" th:text="${event.vkLink}"></a></h4>
             </td>
         </tr>
     </table>

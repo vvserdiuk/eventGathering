@@ -53,7 +53,7 @@ public class VkEventParser {
     }
 
     public Event getEvent() throws IOException {
-        return new Event(getPosterUrl(), getTitle(), getStartDateTime(), getDescription());
+        return new Event(getPosterUrl(), getTitle(), url, getStartDateTime(), getDescription());
     }
 
     public LocalDateTime getStartDateTime() throws IOException {

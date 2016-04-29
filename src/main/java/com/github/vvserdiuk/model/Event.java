@@ -14,13 +14,22 @@ public class Event {
 
     @GeneratedValue
     @Id
+    @Column(nullable = false)
     private Integer id;
 
+    @Column(nullable = false)
     private String imageLink;
 
+    @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false)
+    private String vkLink;
+
+    @Column(nullable = false)
     private LocalDateTime startDateTime;
+
+    private LocalDateTime endDateTime;
 
     @Length(max = 10_000)
     private String description;
@@ -33,9 +42,10 @@ public class Event {
     public Event() {
     }
 
-    public Event(String imageLink, String title, LocalDateTime startDateTime, String description) {
+    public Event(String imageLink, String title, String vkLink, LocalDateTime startDateTime, String description) {
         this.imageLink = imageLink;
         this.title = title;
+        this.vkLink = vkLink;
         this.startDateTime = startDateTime;
         this.description = description;
     }
@@ -60,12 +70,28 @@ public class Event {
         this.title = title;
     }
 
+    public String getVkLink() {
+        return vkLink;
+    }
+
+    public void setVkLink(String vkLink) {
+        this.vkLink = vkLink;
+    }
+
     public LocalDateTime getStartDateTime() {
         return startDateTime;
     }
 
     public void setStartDateTime(LocalDateTime startDateTime) {
         this.startDateTime = startDateTime;
+    }
+
+    public LocalDateTime getEndDateTime() {
+        return endDateTime;
+    }
+
+    public void setEndDateTime(LocalDateTime endDateTime) {
+        this.endDateTime = endDateTime;
     }
 
     public String getDescription() {

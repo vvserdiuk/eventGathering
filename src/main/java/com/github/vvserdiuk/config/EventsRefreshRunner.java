@@ -35,7 +35,6 @@ public class EventsRefreshRunner implements CommandLineRunner {
     public void run(String... args) {
         while (true) {
             try {
-                LOG.info("bla-bla-bla");
                 refresh();
                 TimeUnit.MINUTES.sleep(30);
             } catch (InterruptedException e) {
