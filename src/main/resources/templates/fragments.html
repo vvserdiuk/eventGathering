@@ -21,7 +21,7 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
 
-            <form method="get" action="#" th:action="@{search}" class="navbar-form navbar-left" role="search">
+            <form method="get" action="#" th:action="@{/search}" class="navbar-form navbar-left" role="search">
                 <div class="form-group">
                     <input  name="title" type="text" class="form-control" placeholder="Search"/>
                 </div>
@@ -52,6 +52,50 @@
     </div>
 </div>
 
+<!-- Pagination Bar -->
+<div th:with="url='events/pages'" th:fragment='paginationbar'>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class='pagination pagination-centered'>
+                <ul class="pagination">
+                    <li th:class="${currentIndex == 1}? 'disabled' : ''">
+                        <span th:if='${currentIndex == 1}'>← First</span>
+                        <a th:if='${currentIndex != 1}'
+                           th:href="@{'1'}">← First</a>
+                    </li>
+                    <li th:class="${currentIndex != 1}? '' : 'disabled'">
+                        <span th:if='${currentIndex == 1}'>«</span>
+                        <a th:if='${currentIndex != 1}'
+                           th:href="@{${currentIndex - 1}}"
+                           title='Go to previous page'>«</a>
+                    </li>
+
+                    <li th:each="item : ${#numbers.sequence(beginIndex,endIndex)}"
+                        th:class="${item == currentIndex ? 'active' : '' }">
+
+                        <span th:if='${item == currentIndex}' th:text='${item}'>1</span>
+
+                        <a th:if='${item != currentIndex}'
+                           th:href="@{${item}}">
+                            <span th:text='${item}'>1</span>
+                        </a>
+                    </li>
+
+                    <li th:class="${currentIndex != events.totalPages}? '' : 'disabled'">
+                        <span th:if='${currentIndex == events.totalPages}'>»</span>
+                        <a th:if='${currentIndex != events.totalPages}'
+                           th:href="@{${currentIndex + 1}}" title='Go to next page'>»</a>
+                    </li>
+                    <li th:class="${currentIndex == events.totalPages}? 'disabled' : ''">
+                        <span th:if='${currentIndex == events.totalPages}'>Last →</span>
+                        <a th:if='${currentIndex != events.totalPages}'
+                           th:href="@{${events.totalPages}}">Last →</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
 <th:block th:fragment="footer">
     <footer class="footer" style="background-color: #2196f3">

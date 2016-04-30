@@ -6,6 +6,8 @@ import com.github.vvserdiuk.util.EventUtil;
 import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +29,13 @@ public class EventServiceImpl implements EventService{
     EventRepository repository;
 
     @Override
-    public List<Event> getAll(){
-        return Lists.newArrayList(repository.findAll());
+    public List<Event> getAll() {
+        return repository.findAllSorted();
+    }
+
+    @Override
+    public Page<Event> getByPages(Pageable pageable){
+        return repository.findAllByPagesSorted(pageable);
     }
 
     @Override

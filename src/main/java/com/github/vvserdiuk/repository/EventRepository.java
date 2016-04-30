@@ -1,6 +1,8 @@
 package com.github.vvserdiuk.repository;
 
 import com.github.vvserdiuk.model.Event;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -30,4 +32,10 @@ public interface EventRepository extends CrudRepository<Event, Integer> {
 
     @Query("SELECT e FROM Event e WHERE LOWER(e.title) LIKE LOWER(CONCAT('%', :title, '%'))")
     List<Event> findByTitleContaining(@Param("title")String title);
+
+    @Query("SELECT e FROM Event e ORDER BY e.startDateTime ASC ")
+    List<Event> findAllSorted();
+
+    @Query("SELECT e FROM Event e ORDER BY e.startDateTime ASC ")
+    Page<Event> findAllByPagesSorted(Pageable pageable);
 }

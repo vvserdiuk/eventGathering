@@ -1,6 +1,8 @@
 package com.github.vvserdiuk.service;
 
 import com.github.vvserdiuk.model.Event;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
@@ -13,6 +15,8 @@ import java.util.List;
 public interface EventService {
 
     List<Event> getAll();
+
+    Page<Event> getByPages(Pageable pageable);
 
     Event getById(Integer id);
 

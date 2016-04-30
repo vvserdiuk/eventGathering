@@ -6,7 +6,9 @@ import com.github.vvserdiuk.model.DateTimeEntity;
 import com.github.vvserdiuk.util.EventUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -25,12 +27,11 @@ public class EventAjaxController {
     @Autowired
     EventService service;
 
-
     @RequestMapping(value = {"/", "/events"}, method = RequestMethod.GET)
     public List<Event> getAll(){
+        LOG.debug("getAll MVC");
         return service.getAll();
     }
-
     @RequestMapping(value = "/events/filter", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<Event> getFiltered(@RequestBody DateTimeEntity dateTimeEntity
     ){
