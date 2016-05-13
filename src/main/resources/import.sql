@@ -1,8 +1,8 @@
-INSERT INTO community (title, vk_link) VALUES
-  ('Рыба Андрей', 'http://vk.com/a_ryba'),
-  ('Махнопаб', 'http://vk.com/makhnopub');
+INSERT INTO communities (title, vk_link, image_link) VALUES
+  ('Рыба Андрей', 'http://vk.com/a_ryba', 'http://cs626817.vk.me/v626817468/a452/VXFrg9J8GS0.jpg'),
+  ('Махнопаб', 'http://vk.com/makhnopub', 'http://cs631220.vk.me/v631220070/26238/Z-J4Ytqv-rA.jpg');
 
-INSERT INTO event (image_link, title, vk_link, start_date_time, description, community_id) VALUES
+INSERT INTO events (image_link, title, vk_link, start_date_time, description, community_id) VALUES
 ('http://cs630720.vk.me/v630720468/60f2/yzOR4yh-yJw.jpg', 'Вечерний English', 'http://vk.com/event78020980', '2016-03-07 10:00:00', 'Monday 19:00<br><br>Public speaking and debates.<br><br>Тарификация: первый час фиксировано - 35 грн, дальнейшие - 18 грн (30 коп/мин).<br><br>Обязательная предварительная запись:<br>(056) 788-00-56<br>(097) 139-84-99<br>(063) 350-02-14<br>(095) 226-42-18', 1),
 ('http://cs633930.vk.me/v633930468/14b38/pA1mipWP0uM.jpg', 'Мастер-класс: Открытки к 8 марта', 'http://vk.com/event112491805', '2016-03-08 11:00:00', '7 марта в 14:00<br><br>Мы сделаем открытку с цветочками из из фоамирана, бабочками и использованием высечек из картона. Высечки будем делать на машинке для вырубки. Узнаем, что такое фоамиран и как с ним работать.<br><br>Стоимость мастер-класса: 100 грн<br><br>В стоимость входят материалы, время в пространстве, чаи/кофе/сладости.<br><br>!!! Внимание! Обязательна предварительная запись!!!<br>Тел.: (056) 788-00-56<br>(097) 139-84-99<br>(063) 350-02-14<br>(095) 226-42-18', 2),
   ('http://cs630720.vk.me/v630720468/60f2/yzOR4yh-yJw.jpg', 'Вечерний English', 'http://vk.com/event78020980', '2016-03-07 12:00:00', 'Monday 19:00<br><br>Public speaking and debates.<br><br>Тарификация: первый час фиксировано - 35 грн, дальнейшие - 18 грн (30 коп/мин).<br><br>Обязательная предварительная запись:<br>(056) 788-00-56<br>(097) 139-84-99<br>(063) 350-02-14<br>(095) 226-42-18', 1),
@@ -14,5 +14,13 @@ INSERT INTO event (image_link, title, vk_link, start_date_time, description, com
   ('http://cs630720.vk.me/v630720468/60f2/yzOR4yh-yJw.jpg', 'Вечерний English', 'http://vk.com/event78020980', '2016-04-01 15:00:00', 'Monday 19:00<br><br>Public speaking and debates.<br><br>Тарификация: первый час фиксировано - 35 грн, дальнейшие - 18 грн (30 коп/мин).<br><br>Обязательная предварительная запись:<br>(056) 788-00-56<br>(097) 139-84-99<br>(063) 350-02-14<br>(095) 226-42-18', 1),
   ('http://cs633930.vk.me/v633930468/14b38/pA1mipWP0uM.jpg', 'Мастер-класс: Открытки к 8 марта', 'http://vk.com/event112491805', '2016-04-02 14:00:00', '7 марта в 14:00<br><br>Мы сделаем открытку с цветочками из из фоамирана, бабочками и использованием высечек из картона. Высечки будем делать на машинке для вырубки. Узнаем, что такое фоамиран и как с ним работать.<br><br>Стоимость мастер-класса: 100 грн<br><br>В стоимость входят материалы, время в пространстве, чаи/кофе/сладости.<br><br>!!! Внимание! Обязательна предварительная запись!!!<br>Тел.: (056) 788-00-56<br>(097) 139-84-99<br>(063) 350-02-14<br>(095) 226-42-18', 2);
 
-INSERT INTO event (image_link, title, vk_link, start_date_time, end_date_time, description, community_id) VALUES
+INSERT INTO events (image_link, title, vk_link, start_date_time, end_date_time, description, community_id) VALUES
   ('http://cs630720.vk.me/v630720468/60f2/yzOR4yh-yJw.jpg', 'Вечерний English', 'http://vk.com/event78020980', '2016-03-07 19:00:00', '2016-03-07 21:00:00', 'Monday 19:00<br><br>Public speaking and debates.<br><br>Тарификация: первый час фиксировано - 35 грн, дальнейшие - 18 грн (30 коп/мин).<br><br>Обязательная предварительная запись:<br>(056) 788-00-56<br>(097) 139-84-99<br>(063) 350-02-14<br>(095) 226-42-18', 1);
+
+INSERT INTO users (email, password) VALUES
+  ('admin@gmail.com', '123456'),
+  ('user@gmail.com', '123456');
+
+INSERT INTO user_roles (role, user_id) VALUES
+  ('ROLE_ADMIN', 1),
+  ('ROLE_USER', 2);

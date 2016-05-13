@@ -14,11 +14,14 @@
 <th:block th:include="fragments::header"/>
 <div class="container">
     <!--/*@thymesVar id="community" type="com.github.vvserdiuk.model.Community"*/-->
-    <h1 th:text="${community.title}"></h1>
+    <h1>
+    <span th:text="${community.title}" ></span>
+    <span><a th:href="${community.vkLink}" th:text=" '| ' + VK" target="_blank" ></a></span>
+    </h1>
     <table class="table" >
         <tr>
-            <td><img src="http://cs636216.vk.me/v636216468/4ef/JTsOP25CgZg.jpg"/>
-                <a th:href="${community.vkLink}" th:text="${community.vkLink}" target="_blank" ></a>
+            <td><img style="max-width: 100%; height: auto" th:src="${community.imageLink}"/>
+                <!--<a th:href="${community.vkLink}" th:text="${community.vkLink}" target="_blank" ></a>-->
             </td>
             <td >
                 <!--/*@thymesVar id="events" type="java.util.List<Event>"*/-->

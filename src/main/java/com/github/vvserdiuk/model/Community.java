@@ -10,15 +10,22 @@ import java.util.Set;
  * Created by vvserdiuk on 19.03.2016.
  */
 @Entity
+@Table(name = "communities")
 public class Community {
 
     @GeneratedValue
     @Id
+    @Column(nullable = false)
     private Integer id;
 
+    @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false)
     private String vkLink;
+
+    @Column(nullable = false)
+    private String imageLink;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "community")
     @JsonIgnore
@@ -49,6 +56,14 @@ public class Community {
 
     public void setVkLink(String vkLink) {
         this.vkLink = vkLink;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
     }
 
     public Set<Event> getEvents() {
