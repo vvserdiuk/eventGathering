@@ -15,9 +15,9 @@ import java.util.List;
 @Repository
 public interface CommunityRepository extends CrudRepository<Community, Integer> {
 
-    @Query("SELECT c FROM Community c")
-    List<Community> getAll();
+    @Query("SELECT c FROM Community c  ORDER BY c.title ASC")
+    List<Community> findAllSorted();
 
     @Query("SELECT c FROM Community c WHERE LOWER(c.title) LIKE LOWER(CONCAT('%', :title, '%'))")
-    List<Event> findByTitleContaining(@Param("title")String title);
+    List<Community> findByTitleContaining(@Param("title")String title);
 }

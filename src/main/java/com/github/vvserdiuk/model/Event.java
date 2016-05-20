@@ -19,10 +19,10 @@ public class Event {
     private Integer id;
 
     @Column(nullable = false)
-    private String imageLink;
+    private String title;
 
     @Column(nullable = false)
-    private String title;
+    private String imageLink;
 
     @Column(nullable = false)
     private String vkLink;

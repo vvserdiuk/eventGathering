@@ -23,8 +23,13 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     @Override
-    public List<Event> findByTitleContaining(String title) {
+    public List<Community> findByTitleContaining(String title) {
         return repository.findByTitleContaining(title);
+    }
+
+    @Override
+    public List<Community> getAll() {
+        return repository.findAllSorted();
     }
 
 

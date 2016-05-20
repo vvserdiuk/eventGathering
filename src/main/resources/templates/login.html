@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::headTag('Events')">
+    <!-- ============================================================================ -->
+    <!-- This <head> is only used for static prototyping purposes (natural templates) -->
+    <!-- and is therefore entirely optional, as this markup fragment will be included  -->
+    <!-- from "fragments.html" at runtime.                                            -->
+    <!-- ============================================================================ -->
+    <meta charset="UTF-8"/>
+    <title>EvenGathering</title>
+    <link href="https://cdn.jsdelivr.net/bootswatch/3.3.5/paper/bootstrap.css" rel="stylesheet" media="screen" />
+</head>
+<body>
+<th:block th:include="fragments::header"/>
+<div class="container">
+    <div class="jumbotron">
+        <form class="form-horizontal" name="f" th:action="@{/login}" method="post">
+            <fieldset>
+                <div th:if="${param.error}" class="alert alert-danger">
+                    Invalid username and/or password.
+                </div>
+                <div th:if="${param.logout}" class="alert alert-success">
+                    You have been logged out.
+                </div>
+                <div class="form-group">
+                    <label for="username" class="col-lg-2 control-label">Email</label>
+                    <div class="col-lg-10">
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Email"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-lg-2 control-label">Password</label>
+                    <div class="col-lg-10">
+                        <input class="form-control" type="password"  id="password" name="password" placeholder="Password"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<th:block th:include="fragments::footer"/>
+</body>
+</html>

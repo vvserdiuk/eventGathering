@@ -13,5 +13,9 @@ public interface CommunityService {
 
     Community getById(Integer id);
 
-    List<Event> findByTitleContaining(String title);
+    List<Community> findByTitleContaining(String title);
+
+    List<Community> getAll();
+
+
 }
