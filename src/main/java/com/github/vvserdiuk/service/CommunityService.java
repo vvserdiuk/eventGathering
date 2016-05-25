@@ -17,5 +17,10 @@ public interface CommunityService {
 
     List<Community> getAll();
 
+    void update(Community community);
+
+    void delete(Integer id);
+
+
 
 }

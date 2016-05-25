@@ -32,5 +32,15 @@ public class CommunityServiceImpl implements CommunityService {
         return repository.findAllSorted();
     }
 
+    @Override
+    public void update(Community community) {
+        repository.save(community);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        repository.delete(id);
+    }
+
 
 }

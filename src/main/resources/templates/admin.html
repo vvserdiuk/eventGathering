@@ -12,13 +12,14 @@
 </head>
 <body>
 <th:block th:include="fragments::header"/>
+<p id="test"></p>
 <div class="container">
     <div class="jumbotron">
-        <table class="table table-striped table-hover ">
+        <table th:fragment="communityList" class="table table-striped table-hover ">
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Community Name</th>
+                <th>Community Title</th>
                 <th>Community VK link</th>
             </tr>
             </thead>
@@ -28,14 +29,102 @@
                 <td th:text="${community.id}"></td>
                 <td th:text="${community.title}"></td>
                 <td th:text="${community.vkLink}"></td>
-                <!--TODO-->
-                <td><a href="#" class="btn btn-primary">Edit</a></td>
-                <td><a href="#" class="btn btn-danger">Delete</a></td>
+                <td><a href="#" class="btn btn-primary editButton">Edit</a></td>
+                <td><a href="#" class="btn btn-danger  delButton">Delete</a></td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
+<div class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Edit community</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" method="post" id="detailsForm">
+                    <input type="hidden" id="id" name="id"/>
+                    <div class="form-group">
+                        <label for="title" class="control-label col-xs-3">Title</label>
+
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" id="title" name="title" placeholder="title"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="vkLink" class="control-label col-xs-3">VK link</label>
+
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" id="vkLink" name="vkLink" placeholder="vkLink"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                <a href="#" class="btn btn-primary saveButton">Save changes</a>
+            </div>
+        </div>
+    </div>
+</div>
 <th:block th:include="fragments::footer"/>
+<script>
+    $(document).ready(
+            edit(), save(), del()
+    );
+
+    function edit(){
+        $(document).on('click', '.editButton',function(){
+            var id = $(this).parent().parent().children().first().text();
+            var url = 'api/communities/';
+            $.ajax({
+                type: 'GET',
+                url: url + id,
+                success: function(data){
+                    $('#id').val(data.id);
+                    $('#title').val(data.title);
+                    $('#vkLink').val(data.vkLink);
+                    $('.modal').modal();
+                }
+            });
+        });
+    }
+
+    function save(){
+        $('.saveButton').click(function(){
+            var url = 'admin/ajax/communities/update';
+            var data = {};
+            $("#detailsForm").serializeArray().map(function(x){data[x.name] = x.value;});
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function(data){
+                    $('.modal').modal('hide');
+                    $('.jumbotron').html(data);
+                }
+            });
+        })
+    }
+
+    function del(){
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        $(document).on('click', '.delButton',function(){
+            var url = 'admin/ajax/communities/delete/';
+            var id = $(this).parent().parent().children().first().text();
+            $.ajax({
+                type: 'DELETE',
+                url: url+id,
+                success: function(data){
+                    $('.jumbotron').html(data);
+                }
+            });
+        })
+    }
+</script>
 </body>
 </html>

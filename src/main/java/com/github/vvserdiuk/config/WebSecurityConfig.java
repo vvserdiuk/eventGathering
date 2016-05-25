@@ -17,6 +17,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //TODO should work with csrf enabled
+        http.csrf().disable();
+
         http
                 .authorizeRequests()
                 .antMatchers("/admin").hasAuthority(Role.ROLE_ADMIN.getAuthority())

@@ -24,7 +24,7 @@ public class Community {
     @Column(nullable = false)
     private String vkLink;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String imageLink;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "community")
@@ -32,6 +32,12 @@ public class Community {
     private Set<Event> events;
 
     public Community() {
+    }
+
+    public Community(Integer id, String title, String vkLink) {
+        this.id = id;
+        this.title = title;
+        this.vkLink = vkLink;
     }
 
     public Community(String title, String vkLink) {

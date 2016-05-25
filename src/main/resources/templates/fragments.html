@@ -1,9 +1,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="headTag (title)">
     <meta charset="UTF-8"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title th:text="${title}"></title>
     <link th:href="@{/webjars/bootswatch-paper/3.3.5/css/bootstrap.min.css}" rel="stylesheet" media="screen" />
     <link th:href="@{/webjars/datetimepicker/2.3.4/jquery.datetimepicker.css}" rel="stylesheet" />
+
 </head>
 
 <th:block th:fragment="header">
