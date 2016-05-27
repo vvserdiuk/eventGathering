@@ -15,6 +15,22 @@
 <p id="test"></p>
 <div class="container">
     <div class="jumbotron">
+        <form class="form-horizontal" id="addForm">
+            <div class="form-group has-success">
+                <div class="col-xs-4">
+                    <label for="titleAdd" class="sr-only"></label>
+                    <input id="titleAdd" class="form-control" type="text" name="title" placeholder="Title"/>
+                </div>
+                <div class="col-xs-4">
+                    <label for="vkLinkAdd" class="sr-only"></label>
+                    <input id="vkLinkAdd" class="form-control" type="text" name="vkLink" placeholder="VK link"/>
+                </div>
+                <div class="col-xs-4">
+                    <a href="#" id="addButton" class="btn btn-success">Add community</a>
+                </div>
+            </div>
+        </form>
+        <div class="communityList">
         <table th:fragment="communityList" class="table table-striped table-hover ">
             <thead>
             <tr>
@@ -34,6 +50,7 @@
             </tr>
             </tbody>
         </table>
+        </div>
     </div>
 </div>
 <div class="modal">
@@ -44,7 +61,7 @@
                 <h4 class="modal-title">Edit community</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" method="post" id="detailsForm">
+                <form class="form-horizontal" id="detailsForm">
                     <input type="hidden" id="id" name="id"/>
                     <div class="form-group">
                         <label for="title" class="control-label col-xs-3">Title</label>
@@ -72,8 +89,28 @@
 <th:block th:include="fragments::footer"/>
 <script>
     $(document).ready(
-            edit(), save(), del()
+            add, edit(), save(), del()
     );
+
+    function add(){
+        $(document).on('click', '#addButton',function(){
+            var url = 'admin/ajax/communities/add';
+            var data = {};
+            $("#addForm").serializeArray().map(function(x){data[x.name] = x.value;});
+            $.ajax({
+                type: 'POST',
+                url: url,
+                headers: {
+                    'X-CSRF-TOKEN': getMetaContentByName('_csrf')
+                },
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function(data){
+                    $('.communityList').html(data);
+                }
+            });
+        });
+    }
 
     function edit(){
         $(document).on('click', '.editButton',function(){
@@ -98,32 +135,41 @@
             var data = {};
             $("#detailsForm").serializeArray().map(function(x){data[x.name] = x.value;});
             $.ajax({
-                type: 'POST',
+                type: 'PUT',
                 url: url,
+                headers: {
+                    'X-CSRF-TOKEN': getMetaContentByName('_csrf')
+                },
                 data: JSON.stringify(data),
                 contentType: 'application/json',
                 success: function(data){
                     $('.modal').modal('hide');
-                    $('.jumbotron').html(data);
+                    $('.communityList').html(data);
                 }
             });
         })
     }
 
     function del(){
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
         $(document).on('click', '.delButton',function(){
             var url = 'admin/ajax/communities/delete/';
             var id = $(this).parent().parent().children().first().text();
             $.ajax({
                 type: 'DELETE',
                 url: url+id,
+                headers: {
+                    'X-CSRF-TOKEN': getMetaContentByName('_csrf')
+                },
                 success: function(data){
-                    $('.jumbotron').html(data);
+                    $('.communityList').html(data);
                 }
             });
         })
+    }
+
+    function getMetaContentByName(name, content) {
+        var content = (content == null) ? 'content' : content;
+        return document.querySelector("meta[name='" + name + "']").getAttribute(content);
     }
 </script>
 </body>

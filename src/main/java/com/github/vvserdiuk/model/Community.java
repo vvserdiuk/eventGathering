@@ -21,7 +21,7 @@ public class Community {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String vkLink;
 
 //    @Column(nullable = false)

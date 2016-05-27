@@ -33,6 +33,11 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     @Override
+    public Community create(Community community) {
+        return repository.save(community);
+    }
+
+    @Override
     public void update(Community community) {
         repository.save(community);
     }

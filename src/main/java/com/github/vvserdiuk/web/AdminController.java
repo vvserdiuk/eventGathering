@@ -2,6 +2,7 @@ package com.github.vvserdiuk.web;
 
 import com.github.vvserdiuk.model.Community;
 import com.github.vvserdiuk.service.CommunityService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class AdminController {
 
+    Logger LOG = Logger.getLogger(this.getClass());
+
     @Autowired
     CommunityService communityService;
 
@@ -23,8 +26,15 @@ public class AdminController {
         return "admin";
     }
 
+    @RequestMapping(value = "/admin/ajax/communities/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String create(@RequestBody Community community, Model model){
+        communityService.create(community);
+        LOG.info(community);
+        model.addAttribute("communities", communityService.getAll());
+        return "admin :: communityList";
+    }
 
-    @RequestMapping(value = "/admin/ajax/communities/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/admin/ajax/communities/update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public String update(@RequestBody Community community, Model model){
         communityService.update(community);
         model.addAttribute("communities", communityService.getAll());
